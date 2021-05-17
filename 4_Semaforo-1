@@ -1,1 +1,62 @@
+long seg1 = 0;
+long seg2 = 0;
+int state = 0;
+int ledv=4;
+int leda=3;
+int ledr=5;
+int ev;
+const int i=2;
+int ea;
+int er;
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(ledv,OUTPUT);
+  pinMode(leda,OUTPUT);
+  pinMode(ledr,OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(2),avisar,CHANGE);
+}
+
+void loop()
+{   
+  seg1 =millis();
+  if(state==1){
+    digitalWrite(ledv,HIGH);
+  digitalWrite(leda,HIGH);
+  digitalWrite(ledr,HIGH);
+
+  }else{
+ if((seg1-seg2)>1000){
+ ev=HIGH;
+   ea=LOW;
+   er=LOW;
+ }
+  if((seg1-seg2)>3000){
+  ev=LOW;
+   ea=HIGH;
+   er=LOW;
+  }if((seg1-seg2)>4000){
+    ev=LOW;
+   ea=LOW;
+   er=HIGH;
+   
+  }if((seg1-seg2)>5000){
+
+ seg2=seg1;
+   
+  }
+  }
+  digitalWrite(ledv,ev);
+  digitalWrite(leda,ea);
+  digitalWrite(ledr,er);
+  
+}
+void avisar(){
+
+  if(state==0){
+   state=1; 
+  }else{
+     state=0;  
+  }
+}
 
